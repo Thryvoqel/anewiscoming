@@ -17,15 +17,16 @@
       min-width: 100%; min-height: 100%;
       width: auto; height: auto;
       transform: translate(-50%, -50%);
-      object-fit: cover;
+      object-fit: cover; /* por padrão, preenche */
       z-index: -1;
     }
     .video-desktop { display: block; }
     .video-mobile { display: none; }
 
+    /* Mobile → usa contain em vez de cover */
     @media (max-width: 768px) {
       .video-desktop { display: none; }
-      .video-mobile { display: block; }
+      .video-mobile { display: block; object-fit: contain; background: #000; }
     }
 
     .sound-btn {
