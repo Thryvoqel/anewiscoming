@@ -17,13 +17,13 @@
       min-width: 100%; min-height: 100%;
       width: auto; height: auto;
       transform: translate(-50%, -50%);
-      object-fit: cover; /* por padrão, preenche */
+      object-fit: cover;
       z-index: -1;
     }
     .video-desktop { display: block; }
     .video-mobile { display: none; }
 
-    /* Mobile → usa contain em vez de cover */
+    /* Mobile → usa contain */
     @media (max-width: 768px) {
       .video-desktop { display: none; }
       .video-mobile { display: block; object-fit: contain; background: #000; }
@@ -115,7 +115,7 @@
       Your browser does not support video.
     </video>
 
-    <button class="sound-btn" onclick="toggleSound()">🔊 Sound</button>
+    <button class="sound-btn" onclick="toggleSound()">🔇 Mute</button>
   </section>
 
   <!-- Secção 2: Imagem -->
@@ -137,15 +137,17 @@
   </footer>
 
   <script>
-    // Botão para ativar/desativar som
+    // Botão som/mute dinâmico
     function toggleSound() {
       const videoDesktop = document.getElementById("bgVideoDesktop");
       const videoMobile = document.getElementById("bgVideoMobile");
+      const btn = document.querySelector(".sound-btn");
 
-      if (window.innerWidth > 768 && videoDesktop) {
-        videoDesktop.muted = !videoDesktop.muted;
-      } else if (videoMobile) {
-        videoMobile.muted = !videoMobile.muted;
+      let video = window.innerWidth > 768 ? videoDesktop : videoMobile;
+
+      if (video) {
+        video.muted = !video.muted;
+        btn.textContent = video.muted ? "🔇 Mute" : "🔊 Sound";
       }
     }
 
@@ -172,7 +174,7 @@
       });
     });
 
-    // Clique nos dots para scroll suave
+    // Clique nos dots → scroll suave
     dots.forEach(dot => {
       dot.addEventListener("click", e => {
         e.preventDefault();
