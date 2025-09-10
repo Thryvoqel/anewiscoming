@@ -23,16 +23,22 @@
     .video-desktop { display: block; }
     .video-mobile { display: none; }
 
-    /* Mobile → vídeo 9:16 com zoom fixo */
+    /* Mobile → vídeo 9:16 reduzido e centrado */
     @media (max-width: 768px) {
       .video-desktop { display: none; }
+
       .video-mobile {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: 75%;
+        height: auto;
+        max-height: 75vh;
+        min-width: 0;
+        min-height: 0;
+
         position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%) scale(0.75); /* Zoom fixo a 75% */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         object-fit: contain;
         background: #000;
       }
