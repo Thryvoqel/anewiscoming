@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thryvoqel</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #000; color: #fff; }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body { font-family: "Calibri Light", Arial, sans-serif; background: #000; color: #fff; overflow-x: hidden; }
     section { height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; }
 
     /* Vídeo */
@@ -20,46 +20,144 @@
       transform: translate(-50%, -50%);
       object-fit: cover;
     }
+    .sound-btn {
+      position: absolute;
+      bottom: 20px; right: 20px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+    }
 
     /* Imagem fullscreen */
     .definition img { width: 100%; height: 100%; object-fit: contain; background: #000; }
 
-    /* Contactos */
-    .contact { background: #111; text-align: center; padding: 50px; }
-    .contact h2 { margin-bottom: 20px; }
-    .contact a { color: #0af; text-decoration: none; font-weight: bold; }
+    /* Footer contactos */
+    .contact-footer {
+      background: #000;
+      padding: 20px;
+      font-size: 15px;
+      text-align: center;
+      color: #fff;
+      font-family: "Calibri Light", Arial, sans-serif;
+    }
 
-    /* Footer / Cookies */
-    footer { background: #000; padding: 20px; font-size: 14px; text-align: center; color: #aaa; }
+    /* Legal footer */
+    footer {
+      background: #000;
+      padding: 20px;
+      font-size: 13px;
+      text-align: center;
+      color: #aaa;
+      font-family: "Calibri Light", Arial, sans-serif;
+    }
+
+    /* Scroll dots */
+    .nav-dots {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 100;
+    }
+    .nav-dots a {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #555;
+      display: block;
+      transition: all 0.3s;
+    }
+    .nav-dots a:hover {
+      transform: scale(1.4);
+      background: #888;
+    }
+    .nav-dots a.active {
+      background: #fff;
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
 
+  <!-- Indicadores -->
+  <div class="nav-dots">
+    <a href="#hero" class="dot active"></a>
+    <a href="#definition" class="dot"></a>
+    <a href="#contact-footer" class="dot"></a>
+  </div>
+
   <!-- Secção 1: Vídeo -->
-  <section class="hero">
-    <video autoplay muted loop playsinline>
+  <section class="hero" id="hero">
+    <video id="bgVideo" autoplay muted loop playsinline>
       <source src="assets/Final CapCut 169.mp4" type="video/mp4">
-      O teu navegador não suporta vídeo.
+      Your browser does not support video.
     </video>
+    <button class="sound-btn" onclick="toggleSound()">🔊 Sound</button>
   </section>
 
   <!-- Secção 2: Imagem -->
-  <section class="definition">
+  <section class="definition" id="definition">
     <img src="assets/Diapositivo4.PNG" alt="Thryvoqel Definition">
   </section>
 
-  <!-- Secção 3: Contactos -->
-  <section class="contact">
-    <h2>Contactos</h2>
-    <p>Email: <a href="mailto:info@thryvoqel.com">info@thryvoqel.com</a></p>
-    <p>Website: <a href="https://thryvoqel.com" target="_blank">thryvoqel.com</a></p>
-  </section>
+  <!-- Rodapé de contactos -->
+  <div class="contact-footer" id="contact-footer">
+    Thryvoqel, a new is coming | 
+    <a href="mailto:info@thryvoqel.com" style="color:#fff; text-decoration:none;">info@thryvoqel.com</a> | 
+    <a href="https://thryvoqel.com" target="_blank" style="color:#fff; text-decoration:none;">www.thryvoqel.com</a>
+  </div>
 
-  <!-- Rodapé -->
+  <!-- Rodapé legal -->
   <footer>
-    Este site utiliza cookies apenas para fins funcionais. Ao continuar a navegar, concorda com a nossa política de privacidade.<br>
+    This site uses cookies only for functional purposes. By continuing to browse, you agree to our privacy policy.<br>
     &copy; 2025 Thryvoqel
   </footer>
+
+  <script>
+    // Botão para ativar/desativar som
+    const video = document.getElementById("bgVideo");
+    function toggleSound() {
+      video.muted = !video.muted;
+    }
+
+    // Scroll dots ativo conforme secção
+    const dots = document.querySelectorAll(".nav-dots a");
+    const sections = document.querySelectorAll("section, .contact-footer, footer");
+
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(sec => {
+        const top = window.scrollY;
+        const offset = sec.offsetTop - 100;
+        const height = sec.offsetHeight;
+        if (top >= offset && top < offset + height) {
+          current = sec.getAttribute("id");
+        }
+      });
+
+      dots.forEach(dot => {
+        dot.classList.remove("active");
+        if (dot.getAttribute("href") === "#" + current) {
+          dot.classList.add("active");
+        }
+      });
+    });
+
+    // Clique nos dots para scroll suave
+    dots.forEach(dot => {
+      dot.addEventListener("click", e => {
+        e.preventDefault();
+        const targetId = dot.getAttribute("href").substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: "smooth" });
+      });
+    });
+  </script>
 
 </body>
 </html>
