@@ -23,15 +23,15 @@
     .video-desktop { display: block; }
     .video-mobile { display: none; }
 
-    /* Mobile → vídeo 9:16 reduzido e centrado */
+    /* Mobile → vídeo 9:16 maior (85%) */
     @media (max-width: 768px) {
       .video-desktop { display: none; }
 
       .video-mobile {
         display: block;
-        width: 75%;
+        width: 85%;
         height: auto;
-        max-height: 75vh;
+        max-height: 85vh;
         min-width: 0;
         min-height: 0;
 
@@ -44,9 +44,11 @@
       }
     }
 
+    /* Botão som reposicionado */
     .sound-btn {
       position: absolute;
-      bottom: 20px; right: 20px;
+      bottom: 60px; /* antes 20px */
+      right: 20px;
       background: rgba(0,0,0,0.6);
       border: 1px solid #fff;
       color: #fff;
@@ -56,8 +58,13 @@
       font-size: 14px;
     }
 
-    /* Imagem fullscreen */
-    .definition img { width: 100%; height: 100%; object-fit: contain; background: #000; }
+    /* Imagem ajustada (85%) */
+    .definition img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      background: #000;
+    }
 
     /* Footer contactos */
     .contact-footer {
@@ -91,7 +98,8 @@
       z-index: 100;
     }
     .nav-dots a {
-      width: 14px; height: 14px;
+      width: 10px;   /* antes 14px */
+      height: 10px;  /* antes 14px */
       border-radius: 50%;
       background: #555;
       display: block;
@@ -135,7 +143,7 @@
 
   <!-- Secção 2: Imagem -->
   <section class="definition" id="definition">
-    <img src="assets/Diapositivo6.png" alt="Thryvoqel Definition">
+    <img src="assets/Diapositivo6.PNG" alt="Thryvoqel Definition">
   </section>
 
   <!-- Rodapé de contactos -->
