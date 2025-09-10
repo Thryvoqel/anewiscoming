@@ -16,10 +16,18 @@
       top: 50%; left: 50%;
       min-width: 100%; min-height: 100%;
       width: auto; height: auto;
-      z-index: -1;
       transform: translate(-50%, -50%);
       object-fit: cover;
+      z-index: -1;
     }
+    .video-desktop { display: block; }
+    .video-mobile { display: none; }
+
+    @media (max-width: 768px) {
+      .video-desktop { display: none; }
+      .video-mobile { display: block; }
+    }
+
     .sound-btn {
       position: absolute;
       bottom: 20px; right: 20px;
@@ -94,10 +102,18 @@
 
   <!-- Secção 1: Vídeo -->
   <section class="hero" id="hero">
-    <video id="bgVideo" autoplay muted loop playsinline>
+    <!-- Vídeo desktop (16:9) -->
+    <video id="bgVideoDesktop" autoplay muted loop playsinline class="video-desktop">
       <source src="assets/Final CapCut 169.mp4" type="video/mp4">
       Your browser does not support video.
     </video>
+
+    <!-- Vídeo mobile (9:16) -->
+    <video id="bgVideoMobile" autoplay muted loop playsinline class="video-mobile">
+      <source src="assets/Final CapCut 916.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+
     <button class="sound-btn" onclick="toggleSound()">🔊 Sound</button>
   </section>
 
@@ -121,9 +137,15 @@
 
   <script>
     // Botão para ativar/desativar som
-    const video = document.getElementById("bgVideo");
     function toggleSound() {
-      video.muted = !video.muted;
+      const videoDesktop = document.getElementById("bgVideoDesktop");
+      const videoMobile = document.getElementById("bgVideoMobile");
+
+      if (window.innerWidth > 768 && videoDesktop) {
+        videoDesktop.muted = !videoDesktop.muted;
+      } else if (videoMobile) {
+        videoMobile.muted = !videoMobile.muted;
+      }
     }
 
     // Scroll dots ativo conforme secção
